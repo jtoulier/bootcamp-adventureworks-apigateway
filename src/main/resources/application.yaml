@@ -1,0 +1,27 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      routes:
+        - id: categories-service
+          uri: lb://CATEGORIES
+          predicates:
+            - Path=/categories/**
+        - id: products-service
+          uri: lb://PRODUCTS
+          predicates:
+            - Path=/products/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://host.docker.internal:8761/eureka
+  instance:
+    hostname: localhost
+
